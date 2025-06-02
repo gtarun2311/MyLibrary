@@ -4,7 +4,7 @@ git "https://github.com/IntelliqDevops/${repo}.git"
 }
 def builtartifact()
 {
-  git "mvn package"
+  sh "mvn package"
 }
 def deploytomcat(jobname,ip,context)
 {
