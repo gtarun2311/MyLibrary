@@ -1,0 +1,24 @@
+node('built-in')
+{
+stage('continous download')
+{
+    git 'https://github.com/IntelliqDevops/maven1.git'
+}
+stage('continous build')
+{
+    sh 'mvn package'
+}
+stage('continous deployment')
+{
+    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline2/webapp/target/webapp.war ubuntu@172.31.82.37:/var/lib/tomcat10/webapps/testapp.war'
+}
+stage('continous testing')
+{
+  git 'https://github.com/IntelliqDevops/FunctionalTesting.git'  
+  sh 'java -jar /var/lib/jenkins/workspace/scriptedpipeline2/testing.jar'
+}
+stage('continous delivery')
+{
+    sh 'scp /var/lib/jenkins/workspace/scriptedpipeline2/webapp/target/webapp.war ubuntu@172.31.90.238:/var/lib/tomcat10/webapps/prodapp.war'
+}
+}
